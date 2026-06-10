@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Shield, Clock, CheckCircle2, XCircle, Activity, Server } from 'lucide-react';
 
 export default function RateLimiterSim() {
