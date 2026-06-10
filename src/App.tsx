@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Shield, Clock, CheckCircle2, XCircle, Activity, Server } from 'lucide-react';
+import { Shield, Clock, CheckCircle2, XCircle, Activity, Server, RotateCcw } from 'lucide-react';
 
 export default function RateLimiterSim() {
   const [m, setM] = useState(3);
@@ -31,6 +31,15 @@ export default function RateLimiterSim() {
     // Limpiar animación visual (les damos 1 segundo extra para que terminen de salir de la pantalla)
     setAllRequests(prev => prev.filter(req => req.time > windowStart - 1));
   }, [time, t]);
+
+  const handleReset = () => {
+    setTime(0);
+    setQueue([]);
+    setAllRequests([]);
+    setLogs([]);
+    setStats({ accepted: 0, rejected: 0 });
+    setFlash(null);
+  };
 
   const handleRequest = () => {
     const windowStart = time - t;
@@ -74,9 +83,18 @@ export default function RateLimiterSim() {
             </p>
           </div>
           <div className="text-right">
-            <div className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Tiempo Actual</div>
-            <div className="text-3xl font-mono font-bold text-indigo-600 flex items-center gap-2 justify-end">
-              <Clock className="w-6 h-6" /> T={time}s
+            <div className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-1">Tiempo Actual</div>
+            <div className="flex items-center gap-4 justify-end">
+              <div className="text-3xl font-mono font-bold text-indigo-600 flex items-center gap-2">
+                <Clock className="w-6 h-6" /> T={time}s
+              </div>
+              <button 
+                onClick={handleReset} 
+                className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-colors flex items-center justify-center" 
+                title="Reiniciar simulador"
+              >
+                <RotateCcw className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </div>
